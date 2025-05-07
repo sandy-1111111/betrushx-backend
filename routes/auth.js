@@ -1,16 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
 
-router.post('/register', async (req, res) => {
-  const { username, email, password } = req.body;
-  try {
-    const newUser = new User({ username, email, password });
-    await newUser.save();
-    res.status(201).json({ message: 'User registered successfully' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+router.post('/login', (req, res) => {
+  // Dummy login
+  const { username, password } = req.body;
+  if (username === 'admin' && password === '123') {
+    return res.json({ success: true, token: 'fake-jwt-token' });
   }
+  res.status(401).json({ success: false, message: 'Invalid credentials' });
 });
 
 module.exports = router;
